@@ -1,0 +1,157 @@
+@use "../../../styles/text-settings" as textStyle;
+@use "../../../styles/color-settings" as colorStyle;
+
+$button-sizes: "sm", "md", "lg";
+
+$primary-color-name: "primary-color";
+$secondary-color-name: "secondary-color";
+
+$amount: 18;
+
+.button {
+    position: relative;
+    border-radius: 8px;
+    height: fit-content;
+    width: fit-content;
+    padding: 5px 10px;
+
+    text-align: center;
+
+    &.--fit {
+        width: 100%;
+    }
+
+    &:disabled {
+        opacity: 0.3;
+    }
+
+    &.split {
+        display: grid;
+        padding: 0px !important;
+        grid-template-columns: 1fr auto;
+        & .spl-content {
+            padding: 5px 10px 5px 10px;
+        }
+
+        & .spl-caret {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 10px;
+            height: 100%;
+            transition: 0.2s;
+            transform: rotate(0deg) 0.2s;
+            & .btn-icon {
+                margin-right: 0px !important;
+            }
+        }
+
+        @each $press in ".--pressed", ":active" {
+            &#{$press} {
+                & .spl-caret {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+
+    &.icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & .btn-icon {
+            margin-right: 0px !important;
+        }
+
+        &.__round {
+            border-radius: 50%;
+        }
+    }
+
+    & .btn-icon {
+        margin-right: 8px;
+        pointer-events: none;
+    }
+
+    @each $size in $button-sizes {
+        &.__#{$size} {
+            font-size: textStyle.getTextSize($size);
+            font-weight: 500;
+            & .btn-icon {
+                font-size: textStyle.getTextSize($size) * 0.8;
+            }
+
+            &.icon {
+                height: textStyle.getTextSize($size) * 2.2;
+                width: textStyle.getTextSize($size) * 2.2;
+            }
+        }
+    }
+
+    @each $name, $color in colorStyle.$color_settings {
+        &.__#{$name} {
+            &.--normal {
+                border: 2px solid colorStyle.getColor($name, $primary-color-name);
+                background-color: colorStyle.getColor($name, $primary-color-name);
+                color: #ffffff;
+
+                @each $press in ".--pressed", ":active" {
+                    &#{$press} {
+                        transition: 0.1s;
+                        border: 2px
+                            solid
+                            lighten($color: colorStyle.getColor($name, $primary-color-name), $amount: $amount);
+                        background-color: lighten(
+                            $color: colorStyle.getColor($name, $primary-color-name),
+                            $amount: $amount
+                        );
+                        color: #ffffff;
+                    }
+                }
+            }
+
+            &.--ghost {
+                border: 2px solid colorStyle.getColor($name, $primary-color-name);
+                background-color: transparent;
+                color: colorStyle.getColor($name, $secondary-color-name);
+
+                & .spl-content {
+                    border-right: 2px solid colorStyle.getColor($name, $primary-color-name);
+                }
+
+                @each $press in ".--pressed", ":active" {
+                    &#{$press} {
+                        transition: 0.1s;
+                        border: 2px
+                            solid
+                            lighten($color: colorStyle.getColor($name, $primary-color-name), $amount: $amount);
+                        background-color: transparentize(
+                            lighten($color: colorStyle.getColor($name, $primary-color-name), $amount: $amount),
+                            $amount: 0.9
+                        );
+                        color: lighten($color: colorStyle.getColor($name, $primary-color-name), $amount: $amount);
+                    }
+
+                    & .spl-content {
+                        border-right: 2px
+                            solid
+                            lighten($color: colorStyle.getColor($name, $primary-color-name), $amount: $amount);
+                    }
+                }
+            }
+
+            &.--reverse {
+                border: 2px solid transparent;
+                background-color: transparent;
+                color: colorStyle.getColor($name, $primary-color-name);
+
+                @each $press in ".--pressed", ":active" {
+                    &#{$press} {
+                        transition: 0.1s;
+                        color: lighten($color: colorStyle.getColor($name, $primary-color-name), $amount: $amount);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+@use "../../../styles/text-settings.scss" as textStyle;
+
+.list {
+    position: relative;
+    border: 2px solid rgb(182, 182, 182);
+    border-radius: 8px;
+    width: fit-content;
+    padding: 5px 5px;
+    font-size: textStyle.getTextSize("md");
+    & div {
+        user-select: none;
+        padding: 3px 25px;
+        border-radius: 10px;
+
+        cursor: pointer;
+        &:hover {
+            transition: 0.2s;
+            background-color: #b8cdf3;
+
+            color: #5680ce;
+        }
+
+        & .btn-icon {
+            font-size: textStyle.getTextSize("md") * 0.8;
+            margin-right: 8px;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+$color-settings: (
+    "success": (
+        primary-color: #6200ee,
+        secondary-color: #6200ee,
+    ),
+    "danger": (
+        primary-color: #f32013,
+        secondary-color: #f32013,
+    ),
+    "tomato": (
+        primary-color: #ff6347,
+        secondary-color: #ff6347,
+    ),
+    "split-header": (
+        primary-color: #8f8f8f,
+        secondary-color: #2c2c2c,
+    ),
+);
+
+@function getColor($name, $type) {
+    @return map-get(map-get($color-settings, $name), $type);
+}
